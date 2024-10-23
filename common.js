@@ -144,12 +144,10 @@ function simulateAIResponse(userMessage) {
     }
 
     if (response.length > maxLength) {
-        return response.slice(0, maxLength) + '...';
+        return response.slice(0, maxLength) + '……';
     } else if (response.length < minLength) {
-        for(let i = 0;response.length < minLength;i++){
-            response += "——本对话由OpenJt的大语言模型JoTangLM支持——焦糖工作室(Jotang Studio)";
-        }
-        return response.slice(0, minLengthJS);
+            response += "——对话由OpenJt的大语言模型JoTangLM支持——焦糖工作室(Jotang Studio)欢迎加入焦糖工作室";
+        return response.slice(0, minLength);
     } else {
         return response;
     }
@@ -196,5 +194,8 @@ minLengthJS.addEventListener('input',function(){
     }
     if (minValue < 1){
         this.value = 1;
+    }
+    if (minValue > 100){
+        this.value = 100;
     }
 });
