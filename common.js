@@ -7,9 +7,9 @@ const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 const newChatBtn = document.getElementById('new-chat');
 const themeSelect = document.getElementById('theme');
-const maxLength = document.getElementById('max-length');
-const minLength = document.getElementById('min-length');
 const creativityJS = document.getElementById('creativity');
+const maxLengthJS = document.getElementById('max-length');
+const minLengthJS = document.getElementById('min-length');
 
 function createNewChat() {
     const defaultName = `会话 ${chats.length + 1}`;
@@ -124,8 +124,8 @@ function sendMessage() {
 }
 
 function simulateAIResponse(userMessage) {
-    const maxLengthJS = parseInt(maxLength.value);
-    const minLengthJS = parseInt(minLength.value);
+    let maxLength = parseInt(maxLengthJS.value);
+    let minLength = parseInt(minLengthJS.value);
     const creativity = parseInt(creativityJS.value);
     const responses = [
         `这是对"${userMessage}"的模拟回复……`,
@@ -143,10 +143,10 @@ function simulateAIResponse(userMessage) {
         response += "我的创造力处于中等水平，我会尽量平衡有趣和保守的回答。";
     }
 
-    if (response.length > maxLengthJS) {
-        return response.slice(0, maxLengthJS) + '...';
-    } else if (response.length < minLengthJS) {
-        for(let i = 0;response.length < minLengthJS;i++){
+    if (response.length > maxLength) {
+        return response.slice(0, maxLength) + '...';
+    } else if (response.length < minLength) {
+        for(let i = 0;response.length < minLength;i++){
             response += "——本对话由OpenJt的大语言模型JoTangLM支持——焦糖工作室(Jotang Studio)";
         }
         return response.slice(0, minLengthJS);
@@ -180,20 +180,18 @@ if (chats.length === 0) {
     switchToChat(chats[0].id);
 }
 
-maxLength.addEventListener('input', function() {
-    let value = parseInt(this.value);
-    if (value < 100) {
-        this.value = 100;
-    } else if (value > 1000) {
-        this.value = 1000;
+maxLengthJS.addEventListener('input',function(){
+    let maxValue = parseInt(this.value);
+    let minValue = parseInt(minLengthJS.value);
+    if (maxValue < minValue){
+        this.value = minValue;
     }
 });
 
-minLength.addEventListener('input', function() {
-    let value = parseInt(this.value);
-    if (value < 10) {
-        this.value = 10;
-    } else if (value > 100) {
-        this.value = 100;
+minLengthJS.addEventListener('input',function(){
+    let minValue = parseInt(this.value);
+    let maxValue = parseInt(maxLengthJS.value);
+    if (minValue > maxValue){
+        this.value = maxValue;
     }
 });

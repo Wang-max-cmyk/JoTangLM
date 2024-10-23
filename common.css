@@ -2,9 +2,9 @@
     --text-color: #333;
     --message-user: #e1f0ff;
     --message-ai: #f0f0f0;
-    --rename--color: #000;
-    --rename--hover: #f0f0f0;
-    --delete--color: #333;
+    --rename-color: #000;
+    --rename-hover: #f0f0f0;
+    --delete-color: #333;
     --background: linear-gradient(45deg, #59d2ac 0%, #4682be 100%);
 }
 
@@ -93,7 +93,7 @@ body {
     cursor: pointer;
     font-size: 16px;
     padding: 0;
-    color: var(--delete--color);
+    color: var(--delete-color);
 }
 
 .delete-btn:hover {
@@ -182,9 +182,9 @@ body.dark-theme {
     --text-color: #f0f0f0;
     --message-user: #4a4a4a;
     --message-ai: #3a3a3a;
-    --rename--color: #fff;
-    --rename--hover: #000;
-    --delete--color: #5ab7b2;
+    --rename-color: #fff;
+    --rename-hover: #000;
+    --delete-color: #5ab7b2;
     --background: linear-gradient(45deg, #2d3648 0%, #1a2030 100%);
 }
 
@@ -196,11 +196,11 @@ body.dark-theme {
     padding: 0;
     position: absolute;
     margin-left: -15px;
-    color: var(--rename--color);
+    color: var(--rename-color);
 }
 
 .rename-btn:hover {
-    color: var(--rename--hover);
+    color: var(--rename-hover);
 }
 
 #chat-list li {
