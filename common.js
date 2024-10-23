@@ -194,4 +194,7 @@ minLengthJS.addEventListener('input',function(){
     if (minValue > maxValue){
         this.value = maxValue;
     }
+    if (minValue < 1){
+        this.value = 1;
+    }
 });
