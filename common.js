@@ -146,7 +146,9 @@ function simulateAIResponse(userMessage) {
     if (response.length > maxLengthJS) {
         return response.slice(0, maxLengthJS) + '...';
     } else if (response.length < minLengthJS) {
-        response += "——本对话由焦糖的大语言模型JoTangLM支持——焦糖工作室(Jotang Studio)";
+        for(let i = 0;response.length < minLengthJS;i++){
+            response += "——本对话由OpenJt的大语言模型JoTangLM支持——焦糖工作室(Jotang Studio)";
+        }
         return response.slice(0, minLengthJS);
     } else {
         return response;
@@ -177,3 +179,21 @@ if (chats.length === 0) {
     FchatList();
     switchToChat(chats[0].id);
 }
+
+maxLength.addEventListener('input', function() {
+    let value = parseInt(this.value);
+    if (value < 100) {
+        this.value = 100;
+    } else if (value > 1000) {
+        this.value = 1000;
+    }
+});
+
+minLength.addEventListener('input', function() {
+    let value = parseInt(this.value);
+    if (value < 10) {
+        this.value = 10;
+    } else if (value > 100) {
+        this.value = 100;
+    }
+});
