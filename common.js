@@ -9,7 +9,7 @@ const newChatBtn = document.getElementById('new-chat');
 const themeSelect = document.getElementById('theme');
 const maxLength = document.getElementById('max-length');
 const minLength = document.getElementById('min-length');
-const creativity = document.getElementById('creativity');
+const creativityJS = document.getElementById('creativity');
 
 function createNewChat() {
     const defaultName = `会话 ${chats.length + 1}`;
@@ -18,12 +18,12 @@ function createNewChat() {
         const chatId = Date.now().toString();
         chats.push({ id: chatId, name: chatName, messages: [] });
         chatToLocalStorage();
-        ChatList();
+        FchatList();
         switchToChat(chatId);
     }
 }
 
-function ChatList() {
+function FchatList() {
     chatList.innerHTML = '';
     chats.forEach(chat => {
         const li = document.createElement('li');
@@ -55,7 +55,7 @@ function ChatList() {
 
 function switchToChat(chatId) {
     currentChatId = chatId;
-    ChatList();
+    FchatList();
     chatMessage();
 }
 
@@ -66,7 +66,7 @@ function deleteChat(chatId) {
         if (currentChatId === chatId) {
             currentChatId = chats.length > 0? chats[0].id : null;
         }
-        ChatList();
+        FchatList();
         chatMessage();
     }
 }
@@ -78,7 +78,7 @@ function renameChat(chatId) {
         if (newName && newName !== chat.name) {
             chat.name = newName;
             chatToLocalStorage();
-            ChatList();
+            FchatList();
         }
     }
 }
@@ -124,23 +124,30 @@ function sendMessage() {
 }
 
 function simulateAIResponse(userMessage) {
-    const maxLength = parseInt(maxLength.value);
-    const minLength = parseInt(minLength.value);
-    const creativity = parseInt(creativity.value);
+    const maxLengthJS = parseInt(maxLength.value);
+    const minLengthJS = parseInt(minLength.value);
+    const creativity = parseInt(creativityJS.value);
+    const responses = [
+        `这是对"${userMessage}"的模拟回复……`,
+        `收到您的消息："${userMessage}"，我的回答是：……`,
+        `关于"${userMessage}"，我有以下看法：……`,
+    ];
 
-    let response = `这是对"${userMessage}"的模拟回复`;
+    let response = responses[Math.floor(Math.random() * responses.length)];
 
     if (creativity > 70) {
         response += "我的创造力很高，所以我会给出更有趣的回答！";
     } else if (creativity < 30) {
         response += "我的创造力较低，所以我会给出更保守的回答。";
+    } else {
+        response += "我的创造力处于中等水平，我会尽量平衡有趣和保守的回答。";
     }
 
-    if (response.length > maxLength) {
-        return response.slice(0, maxLength) + '...';
-    } else if (response.length < minLength) {
+    if (response.length > maxLengthJS) {
+        return response.slice(0, maxLengthJS) + '...';
+    } else if (response.length < minLengthJS) {
         response += "——本对话由焦糖的大语言模型JoTangLM支持——焦糖工作室(Jotang Studio)";
-        return response.slice(0, minLength);
+        return response.slice(0, minLengthJS);
     } else {
         return response;
     }
@@ -157,7 +164,7 @@ function changeTheme() {
 newChatBtn.addEventListener('click', createNewChat);
 sendBtn.addEventListener('click', sendMessage);
 userInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' &&!e.shiftKey) {
         e.preventDefault();
         sendMessage();
     }
@@ -167,6 +174,6 @@ themeSelect.addEventListener('change', changeTheme);
 if (chats.length === 0) {
     createNewChat();
 } else {
-    ChatList();
+    FchatList();
     switchToChat(chats[0].id);
 }
